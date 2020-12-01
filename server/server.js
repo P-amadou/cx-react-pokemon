@@ -1,7 +1,6 @@
-const { response } = require("express")
 const express = require('express')
 const knex = require('../knex/knex.js');
-let app = require('express')()
+let app = express()
 let port=process.argv[2]
 
 app.get('/',(request,response)=>{
