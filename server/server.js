@@ -14,12 +14,13 @@ const knex = require('../knex/knex.js')({
     }
   });
 
+  //app.use()
   
-selectAllPokemon=knex.select().from('pokemon')
+selectAllPokemon=knex.select('id').from('pokemon')
 app.get('/',(request,response)=>{
   selectAllPokemon 
-    .then((nom)=>{
-      response.send(nom)
+    .then((id)=>{
+      response.send(id)
     })
   
 })
