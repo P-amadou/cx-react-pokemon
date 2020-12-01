@@ -1,18 +1,17 @@
 
 const express = require('express')
-//const knex = require('../knex/knex.js');
 let app = express()
-let port=process.argv[2]
+let port=4242 //process.argv[2]
 
 const knex = require('../knex/knex.js')({
-  client: 'pg',
-  version: '13',
-  connection: {
-    host : 'localhost',
-    user : 'postgres',
-    password : '',
-    database : 'pokedex'
-  }
+    client: 'pg',
+    connection: {
+      host : '127.0.0.1',
+      user : 'postgres',
+      password : 'Connecter0',
+      database : 'pokedex',
+      charset: 'utf8'
+    }
   });
 
   //app.set("db", db);
