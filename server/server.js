@@ -1,4 +1,4 @@
-
+const fileData=require('./fillData')
 const express = require('express')
 let app = express()
 let port=4242 //process.argv[2]
@@ -14,10 +14,14 @@ const knex = require('../knex/knex.js')({
     }
   });
 
-  //app.set("db", db);
-
+  
+selectAllPokemon=knex.select().from('pokemon')
 app.get('/',(request,response)=>{
-    response.send('test')
+  selectAllPokemon 
+    .then((nom)=>{
+      response.send(nom)
+    })
+  
 })
 
 app.listen(port, () => {
