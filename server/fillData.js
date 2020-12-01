@@ -55,7 +55,6 @@ knex.schema.hasTable('attaques').then(function(exists) {
                         if(check[keyA] == null || check[keyA] == false)
                         {
                             check[keyA] = true;
-                            console.log(keyA)
                             t.string(keyA, 100)
                         }
                     });
@@ -77,34 +76,31 @@ knex.schema.hasTable('attaques').then(function(exists) {
                     if(check[key] == null || check[key] == false)
                     {
                         check[key] = true;
-                        console.log(key)
                         t.string(key, 100)
                     }
 
 
                 })
-            }); 
+            });         
         });
     }
   });
-
+  
   pokedex.forEach(pokemon => {
-    knex('pokemon').insert({'id' : parseInt(pokemon.numéro)})
-    console.log(pokemon.numéro);
-    let propriete = Object.keys(pokemon);
+    knex('pokemon').insert({'id' : parseInt(pokemon.numéro)}).then().catch();
+  })
+/*
+   let propriete = Object.keys(pokemon);
     propriete.forEach(variable => {
         //console.log(variable + " : " + pokemon[variable] )
-        knex('pokemon').insert({variable : pokemon[variable] })
-        })
+         knex('pokemon').where({id : pokemon.numéro}).update({variable : pokemon[variable] }).then().catch();
+        });
     });
+*/
     
 
 
-/*
-    pokedex.forEach(function(pokemon) {
-    knex('pokemon').insert({data : JSON.stringify(pokemon), created_at : new Date(), updated_at: new Date()}).returning('*').toString();
-    });
  
- */
+ 
 
   
