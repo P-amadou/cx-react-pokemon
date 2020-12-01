@@ -55,7 +55,6 @@ const knex = require('knex')({
                         if(check[keyA] == null || check[keyA] == false)
                         {
                             check[keyA] = true;
-                            console.log(keyA)
                             t.string(keyA, 100)
                         }
                     });
@@ -77,7 +76,6 @@ const knex = require('knex')({
                     if(check[key] == null || check[key] == false)
                     {
                         check[key] = true;
-                        console.log(key)
                         t.string(key, 100)
                     }
 
@@ -88,13 +86,19 @@ const knex = require('knex')({
     }
   });
 
-  return;
 
-/*
-    pokedex.forEach(function(pokemon) {
-    knex('pokemon').insert({data : JSON.stringify(pokemon), created_at : new Date(), updated_at: new Date()}).returning('*').toString();
+  pokedex.forEach(pokemon => {
+    knex('pokemon').insert({'id' : parseInt(pokemon.numéro)})
+    let propriete = Object.keys(pokemon);
+    propriete.forEach(variable => {
+        //console.log(variable + " : " + pokemon[variable] )
+        knex('pokemon').insert({variable : pokemon[variable] })
+        })
     });
+
+  exit(0);
+
  
- */
+ 
 
   
