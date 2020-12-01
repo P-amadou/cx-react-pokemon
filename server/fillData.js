@@ -16,12 +16,25 @@ const knex = require('knex')({
     const pokedex = JSON.parse(data);
     pokedex.forEach( data => {
         let propriete = Object.keys(data);
-
+        console.log("Pokemon : \n")
         propriete.forEach(key => {
             console.log(key)
         }
         )
-        exit(0);
+
+        let attaque = data.attaques;
+        attaque.forEach(dataA => {
+
+            let proprieteAttack= Object.keys(dataA);
+            console.log("Attaques : \n")
+            proprieteAttack.forEach(keyA => {
+                
+                console.log(keyA)
+            });
+            exit(0);
+        });
+        
+        
     });
     
 
