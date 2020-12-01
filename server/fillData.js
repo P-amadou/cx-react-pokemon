@@ -3,64 +3,98 @@ const fs = require('fs');
 const { exit } = require('process');
 const knex = require('knex')({
     client: 'pg',
+    version: '13',
     connection: {
-      host : '127.0.0.1',
+      host : 'localhost',
       user : 'postgres',
-      password : 'Connecter0',
-      database : 'pokedex',
-      charset: 'utf8'
+      password : 'password',
+      database : 'pokedex'
     }
     });
 
-const data = fs.readFileSync('../db/pokedex.json');
-const pokedex = JSON.parse(data);
+    const data = fs.readFileSync('../db/pokedex.json');
+    const pokedex = JSON.parse(data);
+   /* pokedex.forEach( data => {
+        console.log(data.numéro)
+        let propriete = Object.keys(data);
+        console.log("Pokemon : \n")
+        propriete.forEach(key => {
+            //console.log(key)
+        }
+        )
 
-pokedex.forEach( data => {
-    let propriete = Object.keys(data);
-    console.log("Pokemon : \n")
-    propriete.forEach(key => {
-        console.log(key)
-    }
-    )
+        let attaque = data.attaques;
+        attaque.forEach(dataA => {
 
-    let attaque = data.attaques;
-    attaque.forEach(dataA => {
-
-        let proprieteAttack= Object.keys(dataA);
-        console.log("Attaques : \n")
-        proprieteAttack.forEach(keyA => {
-            console.log(keyA)
+            let proprieteAttack= Object.keys(dataA);
+            console.log("Attaques : \n")
+            proprieteAttack.forEach(keyA => {
+                
+               //console.log(keyA)
+            });
+            exit(0);
         });
-       exit(0);
-    });
-    
-    
-});
-
-
-
-
-knex.schema.hasTable('pokemon').then(function(exists) {
-if (!exists) {
-    return knex.schema.createTable('pokemon',function(t){
-        t.increments();
-        t.timestamps();
-        t.json('data');
+        
         
     });
-}
-else{
-    return knex.schema.dropTable('pokemon')
-}
-});
+    
+*/
 
+    knex.schema.hasTable('attaques').then(function(exists) {
+    if (!exists) {
+        return knex.schema.createTable('attaques',function(t){
+            t.bigInteger('id').primary()
+            let check = new Object();
+            pokedex.forEach( data => {
+                let attaque = data.attaques;
+                attaque.forEach(dataA => {
+
+                    let propriete= Object.keys(dataA);
+                    propriete.forEach(keyA => {
+                        
+                        if(check[keyA] == null || check[keyA] == false)
+                        {
+                            check[keyA] = true;
+                            console.log(keyA)
+                            t.string(keyA, 100)
+                        }
+                    });
+                }); 
+            });
+        });
+    }
+    });
+
+
+  knex.schema.hasTable('pokemon').then(function(exists) {
+    if (!exists) {
+        return knex.schema.createTable('pokemon',function(t){
+            t.bigInteger('id').primary()
+            let check = new Object();
+            pokedex.forEach( data => {
+                let propriete = Object.keys(data);
+                propriete.forEach(key => {
+                    if(check[key] == null || check[key] == false)
+                    {
+                        check[key] = true;
+                        console.log(key)
+                        t.string(key, 100)
+                    }
+
+
+                })
+            }); 
+        });
+    }
+  });
+
+  return;
 
 /*
-
-pokedex.forEach(function(pokemon) {
-knex('pokemon').insert({data : JSON.stringify(pokemon), created_at : new Date(), updated_at: new Date()}).returning('*').toString();
-});
-
-*/
+    pokedex.forEach(function(pokemon) {
+    knex('pokemon').insert({data : JSON.stringify(pokemon), created_at : new Date(), updated_at: new Date()}).returning('*').toString();
+    });
+ 
+ */
 
   
