@@ -87,16 +87,16 @@ const knex = require('knex')({
   });
   
   pokedex.forEach(pokemon => {
-    knex('pokemon').insert({'id' : parseInt(pokemon.numéro)}).then().catch();
-  })
-/*
-   let propriete = Object.keys(pokemon);
-    propriete.forEach(variable => {
-        //console.log(variable + " : " + pokemon[variable] )
-         knex('pokemon').where({id : pokemon.numéro}).update({variable : pokemon[variable] }).then().catch();
-        });
-    });
-*/
+    knex('pokemon').insert({'id' : parseInt(pokemon.numéro)}).then(update => {
+        let propriete = Object.keys(pokemon);
+        propriete.forEach(variable => {
+             knex('pokemon').where({id : pokemon.numéro}).update({variable : pokemon[variable] }).then().catch();
+            });
+         }).catch();
+});
+
+   
+
     
 
 
