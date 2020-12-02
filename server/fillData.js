@@ -3,12 +3,12 @@ const fs = require('fs');
 const { exit } = require('process');
 const knex = require('knex')({
     client: 'pg',
-    version: '13',
     connection: {
-      host : 'localhost',
+      host : '127.0.0.1',
       user : 'postgres',
-      password : 'password',
-      database : 'pokedex'
+      password : 'Connecter0',
+      database : 'pokedex',
+      charset: 'utf8'
     }
     });
 
@@ -40,7 +40,7 @@ const knex = require('knex')({
     
 */
 
-    knex.schema.hasTable('attaques').then(function(exists) {
+knex.schema.hasTable('attaques').then(function(exists) {
     if (!exists) {
         return knex.schema.createTable('attaques',function(t){
             t.bigInteger('id').primary()
