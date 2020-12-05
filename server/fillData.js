@@ -1,44 +1,36 @@
 const { json } = require('body-parser');
 const fs = require('fs');
 const { exit } = require('process');
-const knex = require('knex')({
-    client: 'pg',
-    connection: {
-      host : '127.0.0.1',
-      user : 'postgres',
-      password : 'Connecter0',
-      database : 'pokedex',
-      charset: 'utf8'
-    }
-    });
+const {development}= require('../knexfile')
+const knex = require('knex')(development);
 
+//const data = fs.readFileSync('./db/pokedex.json');
     const data = fs.readFileSync('../db/pokedex.json');
     const pokedex = JSON.parse(data);
-   /* pokedex.forEach( data => {
-        console.log(data.numéro)
-        let propriete = Object.keys(data);
-        console.log("Pokemon : \n")
-        propriete.forEach(key => {
-            //console.log(key)
-        }
-        )
+    // pokedex.forEach( data => {
+    //     console.log(data.numéro)
+    //     let propriete = Object.values(data);
+    //     console.log("Pokemon : \n")
+    //     propriete.forEach(values => {
+    //         console.log(values)
+    //     }
+    //     )
 
-        let attaque = data.attaques;
-        attaque.forEach(dataA => {
+    //     let attaque = data.attaques;
+    //     attaque.forEach(dataA => {
 
-            let proprieteAttack= Object.keys(dataA);
-            console.log("Attaques : \n")
-            proprieteAttack.forEach(keyA => {
+    //         let proprieteAttack= Object.values(dataA);
+    //         console.log("Attaques : \n")
+    //         proprieteAttack.forEach(valuesA => {
                 
-               //console.log(keyA)
-            });
-            exit(0);
-        });
+    //            console.log(valuesA)
+    //         });
+    //         exit(0);
+    //     });
         
-        
-    });
+    // });
     
-*/
+
 
 knex.schema.hasTable('attaques').then(function(exists) {
     if (!exists) {
@@ -79,28 +71,50 @@ knex.schema.hasTable('attaques').then(function(exists) {
                         t.string(key, 100)
                     }
 
-
                 })
+                
             });         
         });
     }
-  });
-  
-  pokedex.forEach(pokemon => {
-    knex('pokemon').insert({'id' : parseInt(pokemon.numéro)}).then().catch();
-  })
+});            
+let tabAttributes=[], tabValues=[]
+
+pokedex.forEach( pokemon => {
+            //console.log(pokemon.numéro)
+            //knex('pokemon').insert({'id' : parseInt(pokemon.numéro)}).then().catch()
+            let propriete = Object.values(pokemon);
+            //console.log("Pokemon : \n")
+            propriete.forEach(values => {
+            tabValues.push(values)
+            //knex('pokemon').insert({values}).then().catch()
+            //knex('pokemon').where({id : pokemon.numéro}).update({ values }).then().catch();
+            }) 
+        })
+
+pokedex.forEach( data => {
+let propriete = Object.keys(data);
+
+propriete.forEach(key => {
+   tabAttributes.push(key)
+    console.log(data);
+})
+});
+
 /*
-   let propriete = Object.keys(pokemon);
-    propriete.forEach(variable => {
-        //console.log(variable + " : " + pokemon[variable] )
-         knex('pokemon').where({id : pokemon.numéro}).update({variable : pokemon[variable] }).then().catch();
-        });
-    });
-*/
-    
+for (let i = 0; i < tabValues.length; i++) {
+    //console.log('tab des columns'+tabAttributes[i]);
+    knex('pokemon').insert({numéro : tabValues[i]},{nom:tabValues[i]}).then().catch();
+}
+ */
 
 
- 
- 
 
-  
+//    let propriete = Object.keys(pokemon);
+//     propriete.forEach(variable => {
+//         console.log(variable + " : " + pokemon[variable] )
+//         knex('pokemon').where({id : pokemon.numéro}).update({variable : pokemon[variable] }).then().catch();
+//     });
+
+// for (const key in pokedex) {
+//     console.log(`${tabAttributes[key]} : ${tabValues[key]}`);
+// }
