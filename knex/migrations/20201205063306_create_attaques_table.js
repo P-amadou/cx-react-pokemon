@@ -7,7 +7,7 @@ exports.up = function(knex)
     knex.schema.hasTable('attaques').then(function(exists) {
     if (!exists) {
         return knex.schema.createTable('attaques',function(t){
-            t.bigInteger('id').primary()
+            t.bigInteger('idA')
             let check = new Object();
             pokedex.forEach( data => {
                 let attaque = data.attaques;

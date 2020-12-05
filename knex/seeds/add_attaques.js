@@ -5,14 +5,17 @@ const pokedex = JSON.parse(data);
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex('pokemon').del()
+  return knex('attaques').del()
     .then(function () {
       // Inserts seed entries
         let resultat = []
         pokedex.forEach(pokemon => {
-        pokemon['idP'] = parseInt(pokemon.numéro)
-        pokemon['attaques'] = ""
-        resultat.push(knex('pokemon').insert(pokemon))
+        let attaques = pokemon['attaques']
+        attaques.forEach(attaque => {
+          attaque['idA'] = parseInt(pokemon.numéro)
+          resultat.push(knex('attaques').insert(attaque))
+        })
+        
         
       });
       return Promise.all(resultat)
