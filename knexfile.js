@@ -1,10 +1,11 @@
 module.exports={
+  
     development: {
         client: 'pg',
         connection: {
-          host : '127.0.0.1',
+          host : 'localhost',
           user : 'postgres',
-          password : 'Connecter0',
+          password : 'password',
           database : 'pokedex',
           charset: 'utf8'
         },

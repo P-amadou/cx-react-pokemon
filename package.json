@@ -4,6 +4,7 @@
   "description": "",
   "main": "knexfile.js",
   "dependencies": {
+    "bluebird": "^3.7.2",
     "express": "^4.17.1",
     "knex": "^0.21.12",
     "nodemon": "^2.0.6",
@@ -13,7 +14,8 @@
   "scripts": {
     "dev": "nodemon server/server",
     "start": "node server/server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "knex": "knex"
   },
   "repository": {
     "type": "git",
