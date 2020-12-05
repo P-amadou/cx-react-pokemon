@@ -1,5 +1,5 @@
-exports.up = function(knex) 
-{
+
+exports.up = function(knex) {
     const fs = require('fs');
     const data = fs.readFileSync('../cx-react-pokemon/db/pokedex.json');
     const pokedex = JSON.parse(data);
@@ -27,7 +27,7 @@ exports.up = function(knex)
         });
     }
     });
-}
+};
 
 exports.down = function(knex) {
     return knex.schema.dropTable('attaques');

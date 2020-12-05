@@ -4,61 +4,61 @@ const { exit } = require('process');
 const {development}= require('../knexfile')
 const knex = require('knex')(development);
 
-//const data = fs.readFileSync('./db/pokedex.json');
-    const data = fs.readFileSync('../db/pokedex.json');
-    const pokedex = JSON.parse(data);
+const data = fs.readFileSync('./db/pokedex.json');
+//const data = fs.readFileSync('../db/pokedex.json');
+const pokedex = JSON.parse(data);
 
-    knex.schema.hasTable('attaques').then(function(exists) {
-    if (!exists) {
-        return knex.schema.createTable('attaques',function(t){
-            t.bigInteger('id').primary()
-            let check = new Object();
-            pokedex.forEach( data => {
-                let attaque = data.attaques;
-                attaque.forEach(dataA => {
+knex.schema.hasTable('attaques').then(function(exists) {
+if (!exists) {
+    return knex.schema.createTable('attaques',function(t){
+        t.bigInteger('id').primary()
+        let check = new Object();
+        pokedex.forEach( data => {
+            let attaque = data.attaques;
+            attaque.forEach(dataA => {
 
-                    let propriete= Object.keys(dataA);
-                    propriete.forEach(keyA => {
-                        
-                        if(check[keyA] == null || check[keyA] == false)
-                        {
-                            check[keyA] = true;
-                            t.string(keyA, 100)
-                        }
-                    });
-                }); 
-            });
-        });
-    }
-    });
-
-  knex.schema.hasTable('pokemon').then(function(exists) {
-    if (!exists) {
-        return knex.schema.createTable('pokemon',function(t,insertData){
-            t.bigInteger('id').primary()
-            let check = new Object();
-            pokedex.forEach( data => {
-                let propriete = Object.keys(data);
-                propriete.forEach(key => {
-                    if(check[key] == null || check[key] == false)
+                let propriete= Object.keys(dataA);
+                propriete.forEach(keyA => {
+                    
+                    if(check[keyA] == null || check[keyA] == false)
                     {
-                        check[key] = true;
-                        t.string(key, 100)
+                        check[keyA] = true;
+                        t.string(keyA, 100)
                     }
-                })
-                
-            });         
+                });
+            }); 
         });
-    }
-  });
+    });
+}
+});
+
+knex.schema.hasTable('pokemon').then(function(exists) {
+if (!exists) {
+    return knex.schema.createTable('pokemon',function(t,insertData){
+        t.bigInteger('id').primary()
+        let check = new Object();
+        pokedex.forEach( data => {
+            let propriete = Object.keys(data);
+            propriete.forEach(key => {
+                if(check[key] == null || check[key] == false)
+                {
+                    check[key] = true;
+                    t.string(key, 100)
+                }
+            })
+            
+        });         
+    });
+}
+});
 
   
 
-  pokedex.forEach(pokemon => {
-    pokemon['id'] = parseInt(pokemon.numéro)
-    pokemon['attaques'] = ""
-    //console.log(pokemon)
-    knex('pokemon').insert(pokemon).then().catch()
+pokedex.forEach(pokemon => {
+pokemon['id'] = parseInt(pokemon.numéro)
+pokemon['attaques'] = ""
+//console.log(pokemon)
+knex('pokemon').insert(pokemon).then().catch()
 }); 
 /*
 pokedex.forEach(pokemon => {

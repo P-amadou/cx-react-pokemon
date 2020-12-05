@@ -7,16 +7,21 @@ let port=4242 //process.argv[2]
 const knex = require('../knex/knex.js')(development);
   
 
-  //app.use()
+  
   
 let selectAllPokemon=knex.select().from('pokemon')
 app.get('/',(request,response)=>{
   selectAllPokemon 
-    .then((id)=>{
-      response.send(id)
+    .then((data)=>{
+      response.send(data)
     })
   
 })
+app.post('/',(req,res)=>{
+    knex.insert(req.body).returning('*').into('pokemon').then((data)=>{
+      res.send(data)
+    })
+  })
 
 app.listen(port, () => {
     if (port==undefined||port==null) {

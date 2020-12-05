@@ -5,7 +5,7 @@ module.exports={
         connection: {
           host : 'localhost',
           user : 'postgres',
-          password : 'password',
+          password : 'Connecter0',
           database : 'pokedex',
           charset: 'utf8'
         },
