@@ -7,32 +7,8 @@ const knex = require('knex')(development);
 //const data = fs.readFileSync('./db/pokedex.json');
     const data = fs.readFileSync('../db/pokedex.json');
     const pokedex = JSON.parse(data);
-    // pokedex.forEach( data => {
-    //     console.log(data.numéro)
-    //     let propriete = Object.values(data);
-    //     console.log("Pokemon : \n")
-    //     propriete.forEach(values => {
-    //         console.log(values)
-    //     }
-    //     )
 
-    //     let attaque = data.attaques;
-    //     attaque.forEach(dataA => {
-
-    //         let proprieteAttack= Object.values(dataA);
-    //         console.log("Attaques : \n")
-    //         proprieteAttack.forEach(valuesA => {
-                
-    //            console.log(valuesA)
-    //         });
-    //         exit(0);
-    //     });
-        
-    // });
-    
-
-
-knex.schema.hasTable('attaques').then(function(exists) {
+    knex.schema.hasTable('attaques').then(function(exists) {
     if (!exists) {
         return knex.schema.createTable('attaques',function(t){
             t.bigInteger('id').primary()
@@ -56,10 +32,9 @@ knex.schema.hasTable('attaques').then(function(exists) {
     }
     });
 
-
   knex.schema.hasTable('pokemon').then(function(exists) {
     if (!exists) {
-        return knex.schema.createTable('pokemon',function(t){
+        return knex.schema.createTable('pokemon',function(t,insertData){
             t.bigInteger('id').primary()
             let check = new Object();
             pokedex.forEach( data => {
@@ -70,43 +45,79 @@ knex.schema.hasTable('attaques').then(function(exists) {
                         check[key] = true;
                         t.string(key, 100)
                     }
-
                 })
                 
             });         
         });
     }
-});            
-let tabAttributes=[], tabValues=[]
+  });
 
-pokedex.forEach( pokemon => {
-            //console.log(pokemon.numéro)
-            //knex('pokemon').insert({'id' : parseInt(pokemon.numéro)}).then().catch()
-            let propriete = Object.values(pokemon);
-            //console.log("Pokemon : \n")
-            propriete.forEach(values => {
-            tabValues.push(values)
-            //knex('pokemon').insert({values}).then().catch()
-            //knex('pokemon').where({id : pokemon.numéro}).update({ values }).then().catch();
-            }) 
-        })
+  
 
-pokedex.forEach( data => {
-let propriete = Object.keys(data);
-
-propriete.forEach(key => {
-   tabAttributes.push(key)
-    console.log(data);
-})
+  pokedex.forEach(pokemon => {
+    pokemon['id'] = parseInt(pokemon.numéro)
+    pokemon['attaques'] = ""
+    //console.log(pokemon)
+    knex('pokemon').insert(pokemon).then().catch()
+}); 
+/*
+pokedex.forEach(pokemon => {
+    let insertValue = []
+    let propriete = Object.keys(pokemon);
+    propriete.forEach(variable => {
+        //console.log(`{${variable} : ${pokemon[variable]}}`)
+        insertValue.push(`${variable} : ${pokemon[variable]}`)
+        //knex('pokemon').where({id : pokemon.numéro}).update({variable : pokemon[variable]});
+}); 
+    insertValue.pop()
+    console.log(insertValue)
+    let value = JSON.stringify(insertValue)
+    console.log(value)
+    exit()
+    console.log(knex('pokemon').insert(insertValue).toString())
 });
 
+*/
 /*
-for (let i = 0; i < tabValues.length; i++) {
-    //console.log('tab des columns'+tabAttributes[i]);
-    knex('pokemon').insert({numéro : tabValues[i]},{nom:tabValues[i]}).then().catch();
-}
- */
+pokedex.forEach(pokemon => {
+    let columns  = Object.keys(pokemon);
+    let values  = Object.values (pokemon);
+    const sql = `
+                INSERT INTO pokemon (${columns .map(col => col).join(',')})
+                VALUES (${values.map(() => values).join(',')})
+                `;
+                knex.raw(sql);
+    
+    const dataToInsert = columns.map(col => 
+        ({ col: pokemon[col] })); 
+   //${columns.map(col => col).join(',')} : ${values.map(() => values).join(',')}  
+   console.log(dataToInsert)
+   exit()
+   console.log(knex('pokemon').insert(dataToInsert).toString())
+   
+});
+*/
 
+  /*
+  knex.transaction(function(t){
+    pokedex.forEach(pokemon => {
+        knex('pokemon').transacting(t).insert({'id' : parseInt(pokemon.numéro)}).then(t.commit).catch();
+
+        let propriete = Object.keys(data);
+        propriete.forEach(variable => {
+            knex('pokemon').transacting(t).where({id : pokemon.numéro}).update({variable : pokemon[variable] }).then(t.commit).catch();
+           }); 
+    });
+  }).then(function() {
+    // it worked
+   },
+   function() {
+    // it failed
+   });
+*/
+
+
+ 
 
 
 //    let propriete = Object.keys(pokemon);
