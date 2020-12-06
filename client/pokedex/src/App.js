@@ -30,7 +30,7 @@ function incr(nb) {
         return res.json()
       })
       .then((result) => {
-          console.log(result);
+          console.log(result)
           this.setState({
             // isLoaded: true,
             get: result
@@ -67,76 +67,20 @@ function incr(nb) {
     // } else {
       
         return (
-              <div>
+            <div>
               <img src={ pokedex3d }/>
               <div class="container">                     
                 <div class="card" >
+                {/* pb avec la recup des infos avec le this.state.get */}
                   <img src ={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${this.state.get.numéro}.png`}/>
                   <h1>#{this.state.get.numéro}</h1>
                   <p>{this.state.get.nom}</p>
                 </div>
               </div>
               </div>
+          
               
-                // <div className="scripts2">
-                // <header className="scripts2-header">
-                //     {/* <img src={imgPokemon} className="scripts2-imgPokemon" alt="image du pokemon" /> */}
-                // </header>
-                // <h2>Identité</h2>
-                // <table style="width:50%">
-                // <tr>
-                //     <td>Couleur</td>
-                //     <td>Espece</td> 
-                //     <td>Type1</td>
-                //     <td>Taille</td>
-                //     <td>Poids</td>
-                //     <td>Forme</td>
-                // </tr>
-                // <tr>
-                //     <td>{this.state.items.couleur}</td>
-                //     <td>{this.state.items.espece}</td>
-                //     <td>{this.state.items.type1}</td>
-                //     <td>{this.state.items.taille}</td>
-                //     <td>{this.state.items.poids}</td>
-                //     <td>{this.state.items.forme}</td>
-                // </tr>
-                // </table>
-                    // <table style="width:50%">
-                    // <tr>
-                    //   <td>Pokemon</td>
-                    //   <td>Nom FR</td> 
-                    //   <td>Nom EN</td>
-                    //   <td>Nom DE</td>
-                    //   <td>Nom TM</td>
-                    //   <td>Nom JA</td>
-                    // </tr>
-                    // <tr>
-                    //   <td>{this.state.items.pokemon}</td>
-                    //   <td>{this.state.items.nom}</td>
-                    //   <td>{this.state.items.nomen}</td>
-                    //   <td>{this.state.items.nomde}</td>
-                    //   <td>{this.state.items.nomtm}</td>
-                    //   <td>{this.state.items.nomja}</td>
-                    // </tr>
-                    // </table>
-                    // <h2>Attaques</h2>
-                    /* <table style="width:100%">
-                    <tr>
-                      <td>Niveau</td>
-                      <td>Nom</td> 
-                      <td>Puissance</td>
-                      <td>Precision</td>
-                      <td>PP</td>
-)                    </tr>
-                    <tr>
-                      <td>{this.state.items.niveau}</td>
-                      <td>{this.state.items.nom}</td>
-                      <td>{this.state.items.puissance}</td>
-                      <td>{this.state.items.precision}</td>
-                      <td>{this.state.items.pp}</td>
-                    </tr>
-                    </table> */
-                // </div>
+              
         )
     }
   // }

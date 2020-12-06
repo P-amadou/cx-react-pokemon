@@ -3,13 +3,14 @@ const {development}= require('../knexfile')
 //const fileData=require('./fillData')
 var cors = require('cors')
 let app = express()
-let port=4242 //process.argv[2]
+let port=process.argv[2]
 const router=express.Router()
 const routePokemon=require('./route')
 const knex = require('../knex/knex.js')(development);
  
 
 let selectAllPokemon=knex.select().from('pokemon').orderBy('numéro')
+let attaquesAllPokemon=knex.select().from('attaques')
 app.use(cors())
 app.get('/',(req,res)=>{
       res.send(`<h1>Welcome to our API Pokedex </h1>`)
@@ -18,6 +19,9 @@ app.get('/',(req,res)=>{
 app.get('/pokemons',(req,res)=>{
   selectAllPokemon 
     .then((data)=>{
+      res.send(data)
+    })
+    attaquesAllPokemon.then((data)=>{
       res.send(data)
     })
    })
