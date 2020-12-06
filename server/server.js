@@ -9,7 +9,7 @@ const routePokemon=require('./route')
 const knex = require('../knex/knex.js')(development);
  
 
-let selectAllPokemon=knex.select().from('pokemon')
+let selectAllPokemon=knex.select().from('pokemon').orderBy('numéro')
 app.use(cors())
 app.get('/',(req,res)=>{
       res.send(`<h1>Welcome to our API Pokedex </h1>`)
@@ -24,6 +24,8 @@ app.get('/pokemons',(req,res)=>{
 
 app.get('/pokemons/:id',(req,res)=>{
   let {id}=req.params
+  let reg=/:/g
+  id=id.replace(reg,"")
     console.log(id);
     let selectAllDataPokemonById=knex.select().from('pokemon').where('idP', id)
     selectAllDataPokemonById.then((data)=>{

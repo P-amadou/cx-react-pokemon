@@ -1,3 +1,4 @@
+
 const app = document.getElementById('root')
 
 const pokedexLogo = document.createElement('img')
@@ -16,11 +17,12 @@ request.open('GET','http://localhost:4242/pokemons',true)
 
 request.onload= function () {
     let data = JSON.parse(this.response)
+    console.log('Reponse'+this.response);
+    console.log(data);
     if (request.status >= 200 && request.status < 400) {
         data.forEach((pokemons) => {
             let pokemonImg=document.createElement('img')
             pokemonImg.src=`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemons.numéro}.png`
-
             const card = document.createElement('div')
             card.setAttribute('class', 'card')
       
