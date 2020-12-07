@@ -1,0 +1,31 @@
+{
+  "name": "cx-react-pokemon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "knexfile.js",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "knex": "^0.21.12",
+    "nodemon": "^2.0.6",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "nodemon server/server",
+    "start": "node server/server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "knex": "knex"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/P-amadou/cx-react-pokemon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/P-amadou/cx-react-pokemon/issues"
+  },
+  "homepage": "https://github.com/P-amadou/cx-react-pokemon#readme"
+}
