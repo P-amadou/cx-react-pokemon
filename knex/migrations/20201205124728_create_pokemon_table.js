@@ -17,6 +17,10 @@ exports.up = function(knex) {
                             check[key] = true;
                             t.string(key, 500)
                         }
+                        // if(key === 'attaques'){
+                        //     t.json('attaques').nullable()
+                        // }
+                        // pokemon['attaques'] = JSON.stringify(pokemon['attaques'])
                     })
                 });         
             });
