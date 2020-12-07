@@ -11,11 +11,10 @@ exports.seed = function(knex) {
         let resultat = []
         pokedex.forEach(pokemon => {
         pokemon['idP'] = parseInt(pokemon.numéro)
-        pokemon['attaques']=""
+        pokemon['attaques'] = ""
         resultat.push(knex('pokemon').insert(pokemon))
         
       });
-      
       return Promise.all(resultat)
     });
 };
