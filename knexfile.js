@@ -9,6 +9,7 @@ module.exports={
           database : 'pokedex',
           charset: 'utf8'
         },
+        debug:true,
         migrations: {
           directory: __dirname + '/knex/migrations',
         },

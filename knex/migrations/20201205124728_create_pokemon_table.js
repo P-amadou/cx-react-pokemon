@@ -8,6 +8,7 @@ exports.up = function(knex) {
         if (!exists) {
             return knex.schema.createTable('pokemon',function(t,insertData){
                 t.bigInteger('idP').primary()
+                t.bigInteger('attaques_id').unsigned().index().references('idA').inTable('attaques')
                 let check = new Object();
                 pokedex.forEach( data => {
                     let propriete = Object.keys(data);

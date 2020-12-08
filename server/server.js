@@ -3,14 +3,14 @@ const {development}= require('../knexfile')
 //const fileData=require('./fillData')
 var cors = require('cors')
 let app = express()
-let port=process.argv[2]
-const router=express.Router()
-const routePokemon=require('./route')
+let port=process.argv[2] || 4242
+// const router=express.Router()
+// const routePokemon=require('./route')
 const knex = require('../knex/knex.js')(development);
- 
 
+//let selectAllPokemon=knex('pokemon').join().order().select()
 let selectAllPokemon=knex.select().from('pokemon').orderBy('numéro')
-let attaquesAllPokemon=knex.select().from('attaques')
+let selectAllDataPokemonById
 app.use(cors())
 app.get('/',(req,res)=>{
       res.send(`<h1>Welcome to our API Pokedex </h1>`)
@@ -19,44 +19,40 @@ app.get('/',(req,res)=>{
 app.get('/pokemons',(req,res)=>{
   selectAllPokemon 
     .then((data)=>{
-      res.send(data)
+      res.json(data)
     })
-    attaquesAllPokemon.then((data)=>{
-      res.send(data)
-    })
+    
    })
 
 app.get('/pokemons/:id',(req,res)=>{
   let {id}=req.params
-  let reg=/:/g
-  id=id.replace(reg,"")
-    console.log(id);
-    let selectAllDataPokemonById=knex.select().from('pokemon').where('idP', id)
-    selectAllDataPokemonById.then((data)=>{
-      res.send(data)
+    // console.log(id);
+    selectAllDataPokemonById=knex.select().from('pokemon').where('idP', id)
+    selectAllDataPokemonById
+    .then((data)=>{
+      res.json(data)
     })
   })
 
 app.post('/pokemons',(req,res)=>{
-    knex.insert(req.body).returning('*').into('pokemon').then((data)=>{
-      res.send(data)
-    })
+     knex.insert(req.query).returning('*').into('pokemon').then((data)=>{
+      res.json(data)
+     })
+    // console.log(req.query);
   })
 
-/*app.delete('/pokemons/:id',(req,res)=>{
+app.delete('/pokemons/:id',(req,res)=>{
   let {id}=req.params
-  let reg=/:/g
-  id=id.replace(reg,"")
-  let deleteAllDataPokemonById=knex('pokemon').del().where('idP', id)
+  let deleteAllDataPokemonById=knex('pokemon').where('idP', id).del()
   deleteAllDataPokemonById.then((data)=>{
-    res.send(data)
+    res.json(data)
   })
-})*/
+})
 
 app.listen(port, () => {
     if (port==undefined||port==null) {
       console.log(`Syntaxe: node server.js <PORT>`);
-      
+      process.exit(0)
     }else{
       console.log(`Server is listening on port ${port}`)
     }

@@ -1,3 +1,8 @@
+:root{
+  --grey:rgb(64,64,64);
+  --white: rgb(236,236,236);
+}
+
 * {
     box-sizing: border-box
   }
@@ -7,10 +12,31 @@
     -moz-osx-font-smoothing: grayscale;
     font-family: 'Dosis', sans-serif;
     line-height: 1.6;
-    color: #666;
-    background: #F6F6F6;
+    /* color: #666; */
+    /* background: #F6F6F6; */
+  }
+
+  body {
+    font-family: 'Dosis', sans-serif;
+    background: var(--background-color);
+    color: var(--font-weight);
+    transition: background 0.3s ease-in-out, color 0.6s ease-in-out;
+
+  }
+  body.light {
+    --background-color: var(--white);
+    --text-color: var(--grey);
+    --font-weight: 400;
+    
   }
   
+  body.dark {
+    --background-color: var(--grey);
+    --text-color: var(--white);
+    --font-weight: 500;
+    
+  }
+
   #root {
     max-width: 1200px;
     margin: 0 auto;
@@ -36,6 +62,10 @@
     font-weight: bold;
   }
   
+  a {
+    text-decoration: none;
+    color: #666;  
+  }
   .container {
     display: flex;
     flex-wrap: wrap;
