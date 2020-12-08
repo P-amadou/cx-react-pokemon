@@ -1,15 +1,16 @@
 const express = require('express')
 const {development}= require('../knexfile')
 //const fileData=require('./fillData')
-var cors = require('cors')
+let cors = require('cors')
 let app = express()
 let port=process.argv[2] || 4242
 // const router=express.Router()
 // const routePokemon=require('./route')
 const knex = require('../knex/knex.js')(development);
 
-//let selectAllPokemon=knex('pokemon').join().order().select()
-let selectAllPokemon=knex.select().from('pokemon').orderBy('numéro')
+let selectAllPokemon=knex.select().from('pokemon').join('attaques','pokemon.idP','attaques.idA')
+
+//let selectAllPokemon=knex.select().from('pokemon').orderBy('numéro')
 let selectAllDataPokemonById
 app.use(cors())
 app.get('/',(req,res)=>{

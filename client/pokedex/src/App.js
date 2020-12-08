@@ -4,7 +4,7 @@ import './style.css'
 import React from 'react';
 import pokedex3d from './Pokedex3D.png'
 import DarkMode from './darkMode'
-
+let idP
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +14,7 @@ class App extends React.Component {
       // items: []
       get: [],
       getOne:[],
-      mergedData:[]
+      activePokemonId:""
     };
   }
   
@@ -58,18 +58,19 @@ class App extends React.Component {
   }
   
   componentDidMount() {
-    // Promise.all(
-    //   fetch("http://localhost:4242/pokemons") 
-    // )
-    // .then((res)=>{
-    //  this.setState({
+    fetch("http://localhost:4242/pokemons").then(res => { 
+      res.json()
+     .then(data => {
+      this.setState({
       // isLoaded: true,
-      //  get: res1,
+        get: data,
       //  getOne:res2
-    //   mergedData:res1.concat(res2)
-    //  })
-    // })
-    this.getAllPokemons()
+      //mergedData:data
+     })
+     
+    })
+  })
+    // this.getAllPokemons()
    }
 
   render() {
@@ -100,20 +101,6 @@ class App extends React.Component {
       //         </div>
       //     })
       
-      const listePokemon=this.state.get.map((d)=>{
-      //  console.log(`Data nom --> ${d.nom}`)
-      //  console.log(`Data nom --> ${d.numéro}`)
-       return(
-        <div class="card" >
-        <a href={`http://localhost:4242/pokemons/${d.idP}`}>
-        <img src ={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${d.numéro}.png`}/>
-        <h1>#{d.numéro}</h1>
-        <p>{d.nom}</p>
-        </a>
-        </div>
-       )
-      })
-
       const infoPokemon=this.state.get.map((d)=>{
         // console.log(`Data nom --> ${d.nom}`)
         // console.log(`Data nom --> ${d.numéro}`)
@@ -177,6 +164,23 @@ class App extends React.Component {
           </div>
         )
       })
+    
+      const listePokemon=this.state.get.map((d)=>{
+        //  console.log(`Data nom --> ${d.nom}`)
+        //  console.log(`Data nom --> ${d.numéro}`)
+         return(
+          <div class="card" >
+          <a href={`http://localhost:4242/pokemons/${d.idP}`} onClick="{this.state.activePokemonId=d.idP}">
+          {console.log(this.state.activePokemonId)}
+          <img src ={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${d.numéro}.png`}/>
+          <h1>#{d.numéro}</h1>
+          <p>{d.nom}</p>
+          
+          </a>
+          </div>
+         )
+         
+        })
 
       return (
         
@@ -184,8 +188,7 @@ class App extends React.Component {
         <img src={ pokedex3d }/>
         <DarkMode />
         <div class="container">
-          {listePokemon}       
-                        
+          {listePokemon}              
           {/* <div class="card" >
             
               <img src ={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${this.state.get.numéro}.png`}/>
@@ -193,7 +196,6 @@ class App extends React.Component {
               <p>{this.state.get.nom}</p>
               
           </div> */}
-          {/* {infoPokemon} */}
         </div>
         </div>
       )
