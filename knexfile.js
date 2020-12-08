@@ -1,13 +1,15 @@
 module.exports={
+  
     development: {
         client: 'pg',
         connection: {
-          host : '127.0.0.1',
+          host : 'localhost',
           user : 'postgres',
           password : 'Connecter0',
           database : 'pokedex',
           charset: 'utf8'
         },
+        debug:true,
         migrations: {
           directory: __dirname + '/knex/migrations',
         },
